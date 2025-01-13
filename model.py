@@ -7,7 +7,7 @@ class PhonebookApp:
         self.root = tk.Tk()
         self.root.title("Телефонная книга")
         self.root.geometry("800x600")
-        self.root.configure(bg="#e9eff1")  # Light gray background
+        self.root.configure(bg="#e9eff1")  
 
         style = ttk.Style()
         style.configure(
@@ -16,7 +16,7 @@ class PhonebookApp:
             foreground="white",
             padding=10,
             font=("Helvetica", 12),
-            relief="flat"  # Remove the default 3D effect
+            relief="flat" 
         )
         style.map(
             "TButton",
@@ -26,9 +26,9 @@ class PhonebookApp:
 
         style.configure(
             "Treeview",
-            background="#f5f5f5",  # Light gray for treeview background
-            foreground="#333333",  # Darker text
-            fieldbackground="#f5f5f5",  # Match field background
+            background="#f5f5f5",  
+            foreground="#333333",  
+            fieldbackground="#f5f5f5", 
             font=("Helvetica", 11)
         )
         style.configure(
@@ -50,7 +50,7 @@ class PhonebookApp:
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(fill=tk.BOTH, expand=True)
 
-        # Просмотр контактов
+
         self.contacts_frame = tk.Frame(self.notebook, bg="#e9eff1")
         self.notebook.add(self.contacts_frame, text="Просмотр контактов")
 
@@ -72,7 +72,6 @@ class PhonebookApp:
         self.contact_tree.column("Address", width=250)
         self.contact_tree.pack(fill=tk.BOTH, expand=True)
 
-        # Удаление и редактирование контактов
         self.delete_contact_frame = tk.Frame(self.notebook, bg="#e9eff1")
         self.notebook.add(self.delete_contact_frame, text="Удаление/Редактирование контакта")
 
@@ -102,7 +101,6 @@ class PhonebookApp:
         delete_button = ttk.Button(contact_buttons_frame, text="Удалить", command=self.delete_contact)
         delete_button.pack(side=tk.LEFT, padx=10)
 
-        # Добавление контактов
         self.add_contact_frame = tk.Frame(self.notebook, bg="#e9eff1")
         self.notebook.add(self.add_contact_frame, text="Добавить контакт")
 
@@ -192,7 +190,7 @@ class PhonebookApp:
             contact_details = self.model.get_contact(contact_id)
 
             if contact_details:
-                print(f"Contact details: {contact_details}")  # Отладочный вывод
+                print(f"Contact details: {contact_details}") 
                 self.open_edit_dialog(contact_id, contact_details)
             else:
                 messagebox.showerror("Ошибка", "Не удалось получить контакт")
@@ -239,7 +237,7 @@ class PhonebookApp:
             address = address_entry.get("1.0", tk.END).strip()
         else:
             print("Address entry not found!")
-            address = ""  # Set a default value or handle the error appropriately
+            address = "" 
 
         name = self.edit_entries.get("Имя:", tk.Entry()).get()
         phone = self.edit_entries.get("Телефон:", tk.Entry()).get()
@@ -265,10 +263,10 @@ class PhonebookApp:
         contacts = self.model.get_all_contacts()
 
         for contact in contacts:
-            print(f"Contact data: {contact}")  # Вывод для отладки
+            print(f"Contact data: {contact}")  
             if len(contact) < 5:
                 print(f"Error: Contact tuple has fewer than 5 elements: {contact}")
-                continue  # Пропускаем контакт с некорректными данными
+                continue  
 
             self.contact_tree.insert("", tk.END, values=contact)
             self.delete_contact_list.insert(tk.END, (contact[0], contact[1]))
