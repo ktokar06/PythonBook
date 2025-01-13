@@ -186,7 +186,7 @@ class PhonebookApp:
         selected_item = self.delete_contact_list.curselection()
         if selected_item:
             contact_id = self.delete_contact_list.get(selected_item[0])[0]
-            print(f"Selected contact ID: {contact_id}")  # Отладочный вывод
+            print(f"Selected contact ID: {contact_id}")
             contact_details = self.model.get_contact(contact_id)
 
             if contact_details:
@@ -212,7 +212,7 @@ class PhonebookApp:
 
             if label == "Адрес:":
                 entry_widget = tk.Text(edit_window, bg="white", fg="black", font=("Helvetica", 12), height=5)
-                entry_widget.insert("1.0", detail if detail else "")  # Ensure detail is not None
+                entry_widget.insert("1.0", detail if detail else "")  
             else:
                 entry_widget = tk.Entry(edit_window, bg="white", fg="black", font=("Helvetica", 12))
                 entry_widget.insert(0, detail if detail else "")
@@ -228,7 +228,6 @@ class PhonebookApp:
 
     def save_edit(self, contact_id, edit_window):
         """Сохранение изменений редактированного контакта."""
-        # Debug print to check available keys
         print("Available keys in edit_entries:", self.edit_entries.keys())
 
         # Retrieve address safely
