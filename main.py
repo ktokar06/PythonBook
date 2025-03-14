@@ -5,7 +5,7 @@ from model import PhonebookApp
 
 db_params = {
     'host': 'localhost', 
-    'port': 3306,       
+    'port': 3307,
     'user': 'root',
     'password': 'secret',
     'database': 'db_Book',
