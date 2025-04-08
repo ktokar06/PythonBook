@@ -30,7 +30,6 @@ class PhonebookModel:
             ''')
 
     def add_contact(self, name, phone, email, address):
-        """Add a new contact."""
         try:
             self.cursor.execute("SELECT id FROM contacts WHERE phone=%s", (phone,))
             if self.cursor.fetchone():
@@ -47,7 +46,6 @@ class PhonebookModel:
             return False
 
     def delete_contact(self, contact_id):
-        """Delete a contact by ID."""
         try:
             self.cursor.execute("DELETE FROM contacts WHERE id=%s", (contact_id,))
             self.conn.commit()
@@ -55,7 +53,6 @@ class PhonebookModel:
             print(f"Error deleting contact: {e}")
 
     def get_all_contacts(self):
-        """Get all contacts from the database."""
         try:
             self.cursor.execute("SELECT id, name, phone, email, address FROM contacts")
             return self.cursor.fetchall()
@@ -64,7 +61,6 @@ class PhonebookModel:
             return []
 
     def get_contact(self, contact_id):
-        """Get contact data by ID."""
         try:
             self.cursor.execute(
                 "SELECT name, phone, email, address FROM contacts WHERE id=%s",
@@ -76,7 +72,6 @@ class PhonebookModel:
             return None
 
     def update_contact(self, contact_id, name, phone, email, address):
-        """Update contact data by ID."""
         try:
             self.cursor.execute(
                 "UPDATE contacts SET name=%s, phone=%s, email=%s, address=%s WHERE id=%s",
@@ -89,7 +84,6 @@ class PhonebookModel:
             return False
 
     def close(self):
-        """Close the database connection."""
         if self.cursor:
             self.cursor.close()
         if self.conn:

@@ -2,10 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 class PhonebookApp:
-    """
-    Основной класс приложения "Телефонная книга".
-    Отвечает за создание графического интерфейса и взаимодействие с моделью.
-    """
+
     def __init__(self, model):
         """
         Инициализация приложения.
