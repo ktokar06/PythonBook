@@ -1,33 +1,32 @@
-from datetime import time
-
 import mysql.connector
-
 from mysql.connector import Error
 
 class PhonebookModel:
     def __init__(self, db_params):
-        self.conn, self.cursor = self.connect_db(db_params)
-        self.create_tables()
+        self.conn, self.cursor = self._connect(db_params)
+        self._ensure_table_exists()
 
-    def connect_db(self, db_params):
-        """Подключение к базе данных MariaDB."""
-        conn = mysql.connector.connect(**db_params)
-        cursor = conn.cursor()
-        return conn, cursor
+    def _connect(self, params):
+        try:
+            conn = mysql.connector.connect(**params)
+            return conn, conn.cursor()
+        except Error as e:
+            raise RuntimeError(f"Ошибка подключения: {e}")
 
-    def create_tables(self):
+    def _ensure_table_exists(self):
+        """Создает таблицу контактов если она не существует."""
         self.cursor.execute("SHOW TABLES LIKE 'contacts'")
-        result = self.cursor.fetchone()
-        if not result:
-            self.cursor.execute('''
-            CREATE TABLE contacts (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                phone VARCHAR(20) NOT NULL UNIQUE,
-                email VARCHAR(255),
-                address TEXT
-            )
-            ''')
+        if not self.cursor.fetchone():
+            self.cursor.execute("""
+                CREATE TABLE contacts (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    phone VARCHAR(20) NOT NULL UNIQUE,
+                    email VARCHAR(255),
+                    address TEXT
+                )
+            """)
+            self.conn.commit()
 
     def add_contact(self, name, phone, email, address):
         try:
@@ -42,22 +41,24 @@ class PhonebookModel:
             self.conn.commit()
             return True
         except Error as e:
-            print(f"Error adding contact: {e}")
+            print(f"Ошибка добавления: {e}")
             return False
 
     def delete_contact(self, contact_id):
         try:
             self.cursor.execute("DELETE FROM contacts WHERE id=%s", (contact_id,))
             self.conn.commit()
+            return True
         except Error as e:
-            print(f"Error deleting contact: {e}")
+            print(f"Ошибка удаления: {e}")
+            return False
 
     def get_all_contacts(self):
         try:
             self.cursor.execute("SELECT id, name, phone, email, address FROM contacts")
             return self.cursor.fetchall()
         except Error as e:
-            print(f"Error retrieving contacts: {e}")
+            print(f"Ошибка получения данных: {e}")
             return []
 
     def get_contact(self, contact_id):
@@ -68,7 +69,7 @@ class PhonebookModel:
             )
             return self.cursor.fetchone()
         except Error as e:
-            print(f"Error retrieving contact: {e}")
+            print(f"Ошибка получения контакта: {e}")
             return None
 
     def update_contact(self, contact_id, name, phone, email, address):
@@ -80,7 +81,7 @@ class PhonebookModel:
             self.conn.commit()
             return True
         except Error as e:
-            print(f"Error updating contact: {e}")
+            print(f"Ошибка обновления: {e}")
             return False
 
     def close(self):
