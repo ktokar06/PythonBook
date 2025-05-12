@@ -23,7 +23,6 @@ class App(QApplication):
             print(f"Ошибка: {e}")
             sys.exit(1)
 
-
 if __name__ == "__main__":
     app = App(sys.argv)
     sys.exit(app.exec_())
