@@ -6,7 +6,7 @@ from Edit import EditContactDialog
 class MainWindow(QMainWindow):
     def __init__(self, model):
         super().__init__()
-        uic.loadUi('ui/main_window.ui', self)
+        uic.loadUi('../ui/main_window.ui', self)
 
         self.model = model
         self.sorted_asc = False

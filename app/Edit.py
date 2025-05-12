@@ -5,6 +5,6 @@ from PyQt5.QtCore import Qt
 class EditContactDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi('ui/edit_contact_dialog.ui', self)
+        uic.loadUi('../ui/edit_contact_dialog.ui', self)
         self.setWindowModality(Qt.ApplicationModal)
         self.saveButton.clicked.connect(self.accept)

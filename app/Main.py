@@ -1,7 +1,9 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from app.db_base import PhonebookModel
+
 from app.Home import MainWindow
+from db.db_base import PhonebookModel
+
 
 class App(QApplication):
     def __init__(self, sys_argv):
