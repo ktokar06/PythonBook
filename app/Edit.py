@@ -7,5 +7,4 @@ class EditContactDialog(QDialog):
         super().__init__(parent)
         uic.loadUi('ui/edit_contact_dialog.ui', self)
         self.setWindowModality(Qt.ApplicationModal)
-
         self.saveButton.clicked.connect(self.accept)
